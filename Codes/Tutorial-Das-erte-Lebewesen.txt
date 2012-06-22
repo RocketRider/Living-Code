@@ -1,0 +1,143 @@
+*********************Das erte Lebewesen*
+*Tutorial von Ractur********************
+*********************
+
+
+1. LivingCode starten 
+##Klar ^^ 
+
+2. Auf das ? Klicken, und dann fast ganz unten auf Deutsch klicken 
+##Programm auf Deutsche Sprache einstellen 
+
+2. Einfügen->Nahrung hinzufügen>1000 
+##1000 mehr Futter aufs Spielfeld hinzufügen 
+
+3. Einfügen->Eigenes Lebewesen->3->OK klicken 
+##Das Wesen soll 3 Zellen haben, umso mehr Zellen umso 
+mehr Energie verbraucht das Wesen, aber auch umso mehr Möglichkeiten 
+ergeben sich daraus. 3 Zellen genügen aber für den Anfang. 
+
+4. Nun Zelle 0 klicken und dann Copy&Paste den oben genannten Code 
+##Den Code in das Feld Code einfügen damit die Creatur auch etwas macht 
+
+5. Dann auf "Diesen Code für alle Zellen setzen" klicken 
+##Alle Zellen verwenden nun den gleichen Code, die müsste allerdings 
+nicht sein, man könnte jede Zelle auch einen extra Code geben, 
+allerdings ist für den Start es ausreichend einfach den Code in 
+jede Zelle mit dem Klick auf den Button zu kopieren. 
+
+6. Auf Settings TAB klicken und hier "MUTATION deaktivieren" abhaken 
+##Mutationen wollen wir noch nicht, hier mutiert das Wesen, vor allem 
+aber der Code dann per Zufall, dies würde ich am Anfang immer abgehakt 
+lassen damit sich der Code nicht verändert. 
+
+7. Nun nur noch auf NEU klicken und Euer Wesen befindet sich im Spiel 
+bewegt sich und frisst vor sich hin  
+
+
+
+*************************
+**Code ohne Kommentare:**
+*************************
+GOTO @LINE_6 
+@LINE_1 
+COPY_MIN_ENERGY 7512064 
+INC_CELL_RAD 
+EATING_EMIT 
+ABSORBABLE_YES 
+GOTO @LINE_1 
+@LINE_6 
+ROTATE_FOOD 
+MOVE_FORWARD2X 
+MOVE_FORWARD2X 
+MOVE_FORWARD2X 
+MOVE_FORWARD2X 
+
+SEARCH_NEAREST_ENEMY 
+
+IF_ENEMYABS_LESS 50 
+POISON_DNABLOCK_SIZE 5 
+POISON_EMIT_DNABLOCK @LINE_1 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ABSORB_ENEMY 
+ENDIF 
+COPY_MIN_ENERGY 100000 
+COPY25_75 
+GOTO @LINE_6
+
+
+
+
+
+
+************************
+**Code mit Kommentare:**
+************************
+GOTO @LINE_6 //Soll an Sprungmarke @LINE_6 springen und den Virus der ab der nächsten Zeile beginnt überspringen, ansonsten infizieren wir uns ja selbst. 
+//-------------------------- 
+
+//(Ab hier beginnt der Virus den wir später per DNA einschleusen) 
+@LINE_1 //Sprungmarke @LINE_1 dies brauchen wir Später für den Viurs 
+
+COPY_MIN_ENERGY 10000000000000 //Die Creatur die infiziert wird soll sich nur noch schwer Fortplanzen können 
+
+INC_CELL_RAD //Die Creatur soll sich beim sterben aufblähen 
+
+EATING_EMIT //Die Creatur soll sein Futter beim sterben ausenden 
+
+ABSORBABLE_YES //Die Creatur soll sich zur absorbtion Freigeben, so ist es möglich den Gegner die Energie abzusaugen 
+
+GOTO @LINE_1 //Soll wieder von vorne beginnen mit dem Virus 
+//(Ab hier endet der Virus den wir später per DNA einschleusen) 
+
+//-------------------------- 
+
+
+//(Ab hier beginnt der normale Code damit die Creatur was macht) 
+[b]@LINE_6[/b] //Die Sprungmarke von Zeile 0 
+
+ROTATE_FOOD //Creatur soll sich zum Futter drehen 
+MOVE_FORWARD2X //Creatur schnell fortbewegen 
+MOVE_FORWARD2X //Creatur schnell fortbewegen 
+MOVE_FORWARD2X //Creatur schnell fortbewegen 
+MOVE_FORWARD2X //Creatur schnell fortbewegen 
+
+SEARCH_NEAREST_ENEMY //Sucht ob Gegner in der Nähe sind 
+
+IF_ENEMYABS_LESS 50 //Wenn Gegner in der Nähe und weniger als 50 Pixel entfernt dann folgendes machen 
+
+POISON_DNABLOCK_SIZE 5 //Menge an Zeilen festlegen die mit dem Virus eingeschleust werden sollen, maximal sind 5 Zeilen möglich. 
+
+POISON_EMIT_DNABLOCK @LINE_1 //Hier beginnt die "Einschleusung" unser Wesen produziert nun die DNA und verbreitet somit die DNA, und schleust den 5 zeiligen Virus ein welchen wir ab @LINE_1 programmiert haben. 
+
+// Und weil wir schon in der Nähe des Gegners sind versuchen wir Ihm die Energie abzusaugen, wenn er bereits mit dem Virus infiziert ist welchen wir ab @LINE_0 programmiert haben, wird es Möglich sein Ihm die Energie abzusaugen. 
+
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ABSORB_ENEMY //Gegner Energie absaugen 
+ENDIF //IF Schleife beenden 
+
+COPY_MIN_ENERGY 100000 //Energie festlegen wann sich die Creatur selbst vervielfätigt. 
+
+COPY25_75 //Wie soll sich die vorhandene Energie verteilen wenn sich das Wesen vervielfältigt. 
+
+GOTO @LINE_6 //Zu Sprungmarke @LINE_6 springen 
+
+
+
+
